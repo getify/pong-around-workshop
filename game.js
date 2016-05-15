@@ -91,8 +91,7 @@ var Game = (function Game(){
 		var gameOver = false;
 
 		if (!gameOver) {
-
-			// TODO(2): move the ball
+			moveBall();
 
 			// TODO(3): check the ball's position. If
 			// it missed a paddle, the game is over. If
@@ -144,8 +143,11 @@ var Game = (function Game(){
 		// TODO(3): if game is over, draw the ball red (#f00),
 		// otherwise black (#000)
 
-		// TODO(2): draw the ball
+		ctx.fillStyle = "#000";
 
+		ctx.beginPath();
+		ctx.arc( ballX, ballY, ballSize / 2, 0, 2 * Math.PI );
+		ctx.fill();
 		ctx.restore();
 	}
 
@@ -164,6 +166,11 @@ var Game = (function Game(){
 		drawLine( horizontalPaddlePosition, cnv.height - outerPadding, horizontalPaddlePosition + horizontalPaddleSize, cnv.height - outerPadding );
 
 		ctx.restore();
+	}
+
+	function moveBall() {
+		ballX = ballX + ballMovementX;
+		ballY = ballY + ballMovementY;
 	}
 
 	function checkBallPosition() {
