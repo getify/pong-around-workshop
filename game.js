@@ -93,10 +93,18 @@ var Game = (function Game(){
 		if (!gameOver) {
 			moveBall();
 
-			// TODO(3): check the ball's position. If
-			// it missed a paddle, the game is over. If
-			// it hit a paddle, bounce the ball.
-
+			var check = checkBallPosition();
+			// hit or miss?
+			if ( check !== true) {
+				// ball missed a paddle?
+				if (check === false) {
+					gameOver = true;
+				}
+				// ball hit one or more paddles
+				else {
+					bounceBall( check );
+				}
+			}
 		}
 
 		drawBoard( gameOver );
@@ -123,7 +131,7 @@ var Game = (function Game(){
 		ctx.fillStyle = "#fff";
 		ctx.fillRect( 0, 0, cnv.width, cnv.height );
 
-		drawBall( /* TODO(3): pass in game-over signal */ );
+		drawBall( gameOver );
 		drawPaddles();
 
 		// TODO(4): show the score
@@ -140,10 +148,12 @@ var Game = (function Game(){
 	function drawBall(gameOver) {
 		ctx.save();
 
-		// TODO(3): if game is over, draw the ball red (#f00),
-		// otherwise black (#000)
-
-		ctx.fillStyle = "#000";
+		if (gameOver) {
+			ctx.fillStyle = "#f00";
+		}
+		else {
+			ctx.fillStyle = "#000";
+		}
 
 		ctx.beginPath();
 		ctx.arc( ballX, ballY, ballSize / 2, 0, 2 * Math.PI );
@@ -263,9 +273,8 @@ var Game = (function Game(){
 			(hit == 1 && ballMovementX < 0) ||
 			(hit == 2 && ballMovementX > 0)
 		) {
-
-			// TODO(3): flip X direction
-
+			// flip X direction
+			ballMovementX = ballMovementX * -1;
 			hit = true;
 		}
 		// hit top or bottom paddle?
@@ -273,26 +282,31 @@ var Game = (function Game(){
 			(hit == 3 && ballMovementY < 0) ||
 			(hit == 4 && ballMovementY > 0)
 		) {
-
-			// TODO(3): flip Y direction
-
+			// flip Y direction
+			ballMovementY = ballMovementY * -1;
 			hit = true;
 		}
 
 		if (paddlesHit.length > 0) {
-
-			// TODO(3): bounce the ball off the other
-			// paddle
-
+			bounceBall( paddlesHit );
 		}
 		else if (hit === true) {
 
 			// TODO(4): increment the score
 
-			// TODO(3): speed up the ball by 5%, up to a
-			// max of 15 in the X direction and 10 in the
-			// Y direction.
-
+			// speed up the ball a little bit, but not by too much
+			if (ballMovementX < 0) {
+				ballMovementX = Math.max( -15, ballMovementX * 1.05 );
+			}
+			else {
+				ballMovementX = Math.min( 15, ballMovementX * 1.05 );
+			}
+			if (ballMovementY < 0) {
+				ballMovementY = Math.max( -10, ballMovementY * 1.05 );
+			}
+			else {
+				ballMovementY = Math.min( 10, ballMovementY * 1.05 );
+			}
 		}
 	}
 
