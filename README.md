@@ -1,4 +1,4 @@
-# Making A Game: Pong-Around (Step 1)
+# Making A Game: Pong-Around (Step 2)
 
 This is a set of workshop files for writing (parts of) a JS + `<canvas>` Pong-style game called "Pong Around".
 

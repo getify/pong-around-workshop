@@ -42,8 +42,7 @@ var Game = (function Game(){
 
 	function start() {
 		window.addEventListener( "resize", debounce( onViewportResize, 100 ) );
-
-		// TODO(1): add "mousemove" event listener
+		document.addEventListener( "mousemove", movePaddles );
 
 		onViewportResize();
 		setupGame();
@@ -133,9 +132,10 @@ var Game = (function Game(){
 	}
 
 	function drawLine(startX,startY,endX,endY) {
-
-		// TODO(1): draw the line with `startX`, etc.
-
+		ctx.beginPath();
+		ctx.moveTo( startX, startY );
+		ctx.lineTo( endX, endY );
+		ctx.stroke();
 	}
 
 	function drawBall(gameOver) {
@@ -151,13 +151,17 @@ var Game = (function Game(){
 
 	function drawPaddles() {
 		ctx.save();
+		ctx.lineWidth = paddleThickness;
+		ctx.lineCap = "round";
 
-		// TODO(1): setup lineWidth and lineCap
-		//
-		// left paddle: outerPadding, verticalPaddlePosition
-		// right paddle: width - outerPadding, verticalPaddlePosition
-		// top paddle: horizontalPaddlePosition, outerPadding
-		// bottom paddle: horizontalPaddlePosition, height - outerPadding
+		// left paddle
+		drawLine( outerPadding, verticalPaddlePosition, outerPadding, verticalPaddlePosition + verticalPaddleSize );
+		// right paddle
+		drawLine( cnv.width - outerPadding, verticalPaddlePosition, cnv.width - outerPadding, verticalPaddlePosition + verticalPaddleSize );
+		// top paddle
+		drawLine( horizontalPaddlePosition, outerPadding, horizontalPaddlePosition + horizontalPaddleSize, outerPadding );
+		// bottom paddle
+		drawLine( horizontalPaddlePosition, cnv.height - outerPadding, horizontalPaddlePosition + horizontalPaddleSize, cnv.height - outerPadding );
 
 		ctx.restore();
 	}
@@ -296,9 +300,8 @@ var Game = (function Game(){
 	}
 
 	function fixPaddlePositions() {
-
-		// TODO(1): make sure the paddles are correctly positioned
-
+		horizontalPaddlePosition = Math.max( minHoriztonalPaddlePosition, Math.min( maxHorizontalPaddlePosition, horizontalPaddlePosition || 0 ) );
+		verticalPaddlePosition = Math.max( minVerticalPaddlePosition, Math.min( maxVerticalPaddlePosition, verticalPaddlePosition || 0 ) );
 	}
 
 	// Adapted from: https://davidwalsh.name/javascript-debounce-function
