@@ -6,7 +6,7 @@ var Game = (function Game(){
 	var cnv = document.getElementById("game");
 	var ctx = cnv.getContext("2d");
 
-	// TODO(4): add a variable to track the score
+	var bounces;
 
 	var ballSize;
 	var ballX;
@@ -51,6 +51,8 @@ var Game = (function Game(){
 	}
 
 	function setupGame() {
+		bounces = 0;
+
 		// setup initial paddle positions (in the middle)
 		horizontalPaddlePosition = (cnv.width - horizontalPaddleSize) / 2;
 		verticalPaddlePosition = (cnv.height - verticalPaddleSize) / 2;
@@ -134,8 +136,15 @@ var Game = (function Game(){
 		drawBall( gameOver );
 		drawPaddles();
 
-		// TODO(4): show the score
+		drawScore();
+	}
 
+	function drawScore() {
+		ctx.save();
+		ctx.font = "40px sans-serif";
+		ctx.fillStyle = "#00f";
+		ctx.fillText( "Score: " + bounces, outerPadding * 2, outerPadding * 3 );
+		ctx.restore();
 	}
 
 	function drawLine(startX,startY,endX,endY) {
@@ -291,8 +300,7 @@ var Game = (function Game(){
 			bounceBall( paddlesHit );
 		}
 		else if (hit === true) {
-
-			// TODO(4): increment the score
+			bounces = bounces + 1;
 
 			// speed up the ball a little bit, but not by too much
 			if (ballMovementX < 0) {

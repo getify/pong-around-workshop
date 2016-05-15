@@ -1,4 +1,6 @@
-# Making A Game: Pong-Around (Step 4)
+# Making A Game: Pong-Around (FINAL)
+
+[PLAY THE GAME ONLINE](https://rawgit.com/getify/pong-around-workshop/final/index.html)
 
 This is a set of workshop files for writing (parts of) a JS + `<canvas>` Pong-style game called "Pong Around".
 
