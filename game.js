@@ -137,6 +137,14 @@ var Game = (function Game(){
 		drawPaddles();
 
 		drawScore();
+
+		if (gameOver) {
+			ctx.save();
+			ctx.font = "50px sans-serif";
+			ctx.fillStyle = "#f00";
+			ctx.fillText( "Click anywhere to replay...", outerPadding * 3, outerPadding * 6 );
+			ctx.restore();
+		}
 	}
 
 	function drawScore() {
