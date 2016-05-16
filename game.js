@@ -130,6 +130,9 @@ var Game = (function Game(){
 
 		// TODO(4): show the score
 
+		// TODO(4): if game is over, show message:
+		// "Click anywhere to replay..."
+
 	}
 
 	function drawLine(startX,startY,endX,endY) {
